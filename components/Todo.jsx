@@ -15,7 +15,7 @@ import {
   deleteSelectedTodos,
   toggleCompleteTodo,
 } from "../redux/slices/todoSlice";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import EditIcon from "react-native-vector-icons/MaterialIcons";
 
 const Todo = () => {
   const dispatch = useDispatch();
@@ -26,8 +26,7 @@ const Todo = () => {
 
   const addOrUpdateTodoHandler = () => {
     if (todoText.trim() === "") return;
-
-    const timestamp = formatTimestamp(new Date());
+    const timestamp = new Date();
     dispatch(
       addOrUpdateTodo({
         id: editingTodoId || Date.now().toString(),
@@ -65,35 +64,45 @@ const Todo = () => {
     );
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.todoItem}>
-      <TouchableOpacity
-        style={{ flex: 1 }}
-        onLongPress={() => handleLongPress(item.id)}
-        onPress={() => {
-          if (editingTodoId === item.id) return;
-          dispatch(toggleCompleteTodo(item.id));
-        }}
-      >
-        <Text style={[styles.todoText, item.completed && styles.completedText]}>
-          {item.text}
-        </Text>
-        <Text style={styles.timestampText}>{item.timestamp}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          if (editingTodoId === item.id) {
-            addOrUpdateTodoHandler();
-          } else {
-            setEditingTodoId(item.id);
-            setTodoText(item.text);
-          }
-        }}
-      >
-        <Icon name="edit" size={24} color="#007BFF" />
-      </TouchableOpacity>
-    </View>
-  );
+  const renderItem = ({ item }) => {
+    const isSelected = selectedTodos.includes(item.id);
+    const time = formatTimestamp(item.timestamp);
+    return (
+      <View style={[styles.todoItem, isSelected && styles.selectedTodoItem]}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onLongPress={() => handleLongPress(item.id)}
+          onPress={() => {
+            if (editingTodoId === item.id) return;
+            dispatch(toggleCompleteTodo(item.id));
+          }}
+        >
+          <Text
+            style={[
+              styles.todoText,
+              item.completed && styles.completedText,
+              isSelected && styles.selectedTodoItemText,
+            ]}
+          >
+            {item.text}
+          </Text>
+          <Text style={styles.timestampText}>{time}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            if (editingTodoId === item.id) {
+              addOrUpdateTodoHandler();
+            } else {
+              setEditingTodoId(item.id);
+              setTodoText(item.text);
+            }
+          }}
+        >
+          <EditIcon name="edit" size={24} color="#4d4c47" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -143,11 +152,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   addButton: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#ffea00",
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 10,
+  },
+  addButtonText: {
+    color: "black",
+    fontWeight: "bold",
   },
   todoItem: {
     flexDirection: "row",
@@ -156,6 +169,16 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    borderRadius: 12,
+    marginBottom: 3,
+    backgroundColor: "white",
+    elevation: 2,
+  },
+  selectedTodoItem: {
+    backgroundColor: "#d1d1d1",
+  },
+  selectedTodoItemText: {
+    color: "#white",
   },
   todoText: {
     fontSize: 18,

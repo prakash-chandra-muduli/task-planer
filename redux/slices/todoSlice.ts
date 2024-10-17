@@ -41,10 +41,8 @@ export const todoSlice = createSlice({
         toggleSelectTodo: (state, action: PayloadAction<string>) => {
             const id = action.payload;
             if (state.selectedTodos.includes(id)) {
-                
                 state.selectedTodos = state.selectedTodos.filter(todoId => todoId !== id);
             } else {
-                
                 state.selectedTodos.push(id);
             }
         },
