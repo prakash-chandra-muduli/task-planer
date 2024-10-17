@@ -18,3 +18,7 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+# firebase service congif
+google-services.json
+GoogleService-Info.plist
