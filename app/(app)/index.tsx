@@ -42,5 +42,7 @@ const styles = StyleSheet.create({
   errorScreenContainer: {
     justifyContent: "center",
     alignItems: "center",
+    height: screenHeight,
+    backgroundColor: "#f5eded",
   },
 });
