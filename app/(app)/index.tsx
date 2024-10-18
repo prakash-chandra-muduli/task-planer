@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useRef } from "react";
 import Todo from "../../components/Todo";
 import LottieView from "lottie-react-native";
-import { type ErrorBoundaryProps } from "expo-router";
+import { Link, type ErrorBoundaryProps } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 const screenHeight = Dimensions.get("screen").height;
 const screenWidth = Dimensions.get("screen").width;
@@ -11,6 +11,9 @@ const index = () => {
     <SafeAreaView>
       <View style={{ height: screenHeight, width: screenWidth }}>
         <Todo />
+        <Link href={"/progress"}>
+          <Text>GOo</Text>
+        </Link>
       </View>
     </SafeAreaView>
   );

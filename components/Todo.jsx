@@ -51,11 +51,18 @@ const Todo = () => {
   };
 
   const formatTimestamp = (date) => {
+    const formatedDate = new Date(date).toString().slice(0, 15);
     if (!date) return;
     const today = new Date();
-    return new Date(date).toDateString() === today.toDateString()
-      ? "Today"
-      : date;
+    const dayDiff = today.getDate() - new Date(date).getDate();
+    switch (dayDiff) {
+      case 0:
+        return "Today";
+      case 1:
+        return "Yestarday";
+      default:
+        return formatedDate;
+    }
   };
 
   const handleLongPress = (id) => {
@@ -176,6 +183,7 @@ const Todo = () => {
         style={{
           flexDirection: "row",
           gap: 4,
+          marginVertical: 10,
         }}
       >
         <ScrollView
@@ -193,6 +201,7 @@ const Todo = () => {
                   paddingVertical: 2,
                   paddingHorizontal: 6,
                   borderRadius: 10,
+                  marginRight: 5,
                 }}
                 onPress={() => selectOrRemoveFilterHandler(item)}
               >
