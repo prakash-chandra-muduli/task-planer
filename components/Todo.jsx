@@ -35,7 +35,6 @@ const Todo = () => {
   const [isFiltering, setIsFiltering] = React.useState(false);
   const [filteredTodos, setFilteredTodo] = useState([]);
   const [filteres, setFilters] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
 
   const addOrUpdateTodoHandler = () => {
     if (todoText.trim() === "") return;
@@ -56,7 +55,7 @@ const Todo = () => {
     const today = new Date();
     return new Date(date).toDateString() === today.toDateString()
       ? "Today"
-      : date?.toLocaleString();
+      : date;
   };
 
   const handleLongPress = (id) => {
@@ -138,7 +137,7 @@ const Todo = () => {
         let currentTime = new Date();
         let timestamp = new Date(item.timestamp);
         const timediff = Math.floor((currentTime - timestamp) / (1000 * 60));
-        return maxTime < timediff;
+        return maxTime > timediff;
       });
     }
 
@@ -173,12 +172,6 @@ const Todo = () => {
           {editingTodoId ? "Update Todo" : "Add Todo"}
         </Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.addButtonText}>filter</Text>
-      </TouchableOpacity> */}
       <View
         style={{
           flexDirection: "row",
