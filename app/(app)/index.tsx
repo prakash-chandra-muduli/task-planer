@@ -10,10 +10,10 @@ const index = () => {
   return (
     <SafeAreaView>
       <View style={{ height: screenHeight, width: screenWidth }}>
-        <Todo />
         <Link href={"/progress"}>
-          <Text>GOo</Text>
+          <Text>RTK</Text>
         </Link>
+        <Todo />
       </View>
     </SafeAreaView>
   );
